@@ -2,7 +2,14 @@ package FileHandling;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
@@ -22,8 +29,13 @@ public class MergeFiles {
 		    	System.out.println(pdfToMerge.toString() + i);
 			}
         	pdfToMerge.close();
-		}
+   		}
 
     	targetPDF.close();
+    
+    for(String PathToDeleteFile : fileList){
+    	Path fileToDelete = Paths.get(PathToDeleteFile);
+    	PdfHandler.remove(fileToDelete);
+    }
     }
 }

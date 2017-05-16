@@ -7,6 +7,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -24,7 +29,7 @@ import com.itextpdf.kernel.pdf.canvas.parser.listener.LocationTextExtractionStra
 
 
 
-public class ReadPDF {
+public class PdfHandler {
 
 	public static String read(String src) {
 		Rectangle rect = new Rectangle(300, 760, 20, 20);
@@ -103,5 +108,28 @@ public class ReadPDF {
 		
 		return isATC;
 	}
-
+	public static void rename(String newName, String src){
+		Path source = Paths.get(src);
+		String newPath =  newName + ".pdf";
+			
+		try {
+		
+			Files.move(source, source.resolveSibling(newPath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public static void remove(Path path){
+		try {
+		    Files.delete(path);
+		} catch (NoSuchFileException x) {
+		    System.err.format("%s: no such" + " file or directory%n", path);
+		} catch (DirectoryNotEmptyException x) {
+		    System.err.format("%s not empty%n", path);
+		} catch (IOException x) {
+		    // File permission problems are caught here.
+		    System.err.println(x);
+		}
+	}
 }

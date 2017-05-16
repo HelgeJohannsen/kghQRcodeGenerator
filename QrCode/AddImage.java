@@ -23,7 +23,8 @@ import com.itextpdf.layout.element.Image;
 
 import com.itextpdf.test.annotations.type.SampleTest;
 
-import FileHandling.RenamePDFs;
+import FileHandling.PdfHandler;
+
 
 import java.io.File;
 import java.nio.file.Path;
@@ -52,7 +53,7 @@ public class AddImage {
     canvas.addImage(image, matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5]);
     pdfDoc.close();
     Path path = Paths.get(img);
-    RenamePDFs.remove(path);
+    PdfHandler.remove(path);
 }
 
 

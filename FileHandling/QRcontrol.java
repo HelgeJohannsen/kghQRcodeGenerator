@@ -1,25 +1,25 @@
 package FileHandling;
 
+import java.io.File;
+
 import QrCode.AddImage;
 import QrCode.QRCode;
 
-public class CreateQR {
+public class QRcontrol {
 
-	public static String createQR(String inputFile) throws Exception {
+	public static String createQR(String inputFile, String path) throws Exception {
 		
 		// Diese Klasse greift auf die Klassen AddImage und QRCode zu und erstellt mit ihnen einen QRCode und fügt ihn dem Bild hinzu
 		// Die QR png Dateien werden kurzfristig in OutputPDFs erstellt und wieder gelöscht
-		long start = System.currentTimeMillis();
-		String extractedString = ReadPDF.getString(inputFile);
 
-		RenamePDFs.rename(extractedString, inputFile);
-		String dest = "./src/OutputPDFs/" + extractedString +".pdf";
+		String extractedString = PdfHandler.getString(inputFile);
+
+//		RenamePDFs.rename(extractedString, inputFile);
+		String dest = path + File.separator + extractedString +".pdf";
+	
+		String img =  path + File.separator + extractedString + ".png";
 		
-		String img = "./src/OutputPDFs/" + extractedString + ".png";
-		
-		long time = System.currentTimeMillis() - start;
 		QRCode.create(extractedString,img );
-		System.out.println("Time: " + time);
 		AddImage.manipulatePdf(inputFile, dest, img);
 		//returnt einen Pfad der in einem Array durch MergeFiles konkateniert wird
 		return dest;
